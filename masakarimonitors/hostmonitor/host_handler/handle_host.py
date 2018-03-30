@@ -48,7 +48,7 @@ class HandleHost(driver.DriverBase):
 
     def _check_pacemaker_services(self, target_service):
         try:
-            cmd_str = 'systemctl status ' + target_service
+            cmd_str = 'service ' + target_service + ' status'
             command = cmd_str.split(' ')
 
             # Execute command.
