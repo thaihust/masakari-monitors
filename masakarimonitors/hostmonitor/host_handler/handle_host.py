@@ -52,7 +52,8 @@ class HandleHost(driver.DriverBase):
             command = cmd_str.split(' ')
 
             # Execute command.
-            out, err = utils.execute(*command, run_as_root=True)
+            super_user = False
+            out, err = utils.execute(*command, run_as_root=super_user)
 
             if err:
                 raise Exception
@@ -113,7 +114,8 @@ class HandleHost(driver.DriverBase):
 
             try:
                 # Execute crmadmin command.
-                out, err = utils.execute(*command, run_as_root=True)
+                super_user = False
+                out, err = utils.execute(*command, run_as_root=super_user)
 
                 # If command doesn't raise exception, nic is normal.
                 msg = ("Corosync communication using '%s' is normal.") \
@@ -135,8 +137,9 @@ class HandleHost(driver.DriverBase):
     def _check_host_status_by_crmadmin(self):
         try:
             # Execute crmadmin command.
+            super_user = False
             out, err = utils.execute('crmadmin', '-S', self.my_hostname,
-                                     run_as_root=True)
+                                     run_as_root=super_user)
 
             if err:
                 msg = ("crmadmin command output stderr: %s") % err
@@ -159,7 +162,8 @@ class HandleHost(driver.DriverBase):
     def _get_cib_xml(self):
         try:
             # Execute cibadmin command.
-            out, err = utils.execute('cibadmin', '--query', run_as_root=True)
+            super_user = False
+            out, err = utils.execute('cibadmin', '--query', run_as_root=super_user)
 
             if err:
                 msg = ("cibadmin command output stderr: %s") % err
